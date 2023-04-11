@@ -27,7 +27,35 @@ def check_winner(board, player):
         return False
 
 # function to play the game
-def play_game():
+def play_game_x():
+    print("Welcome to Tic Tac Toe!")
+    print_board()
+    player = 'X'
+
+    while True:
+        position = int(input("Enter a position (1-9) to place {}: ".format(player)))
+        if board[position-1] == ' ':
+            board[position-1] = player
+            print_board()
+
+            if check_winner(board, player):
+                print("{} wins! Congratulations!".format(player))
+                break
+
+            if ' ' not in board:
+                print("It's a tie!")
+                break
+
+            if player == 'X':
+                player = 'O'
+            else:
+                player = 'X'
+
+        else:
+            print("That position is already taken. Please choose another position.")
+
+
+def play_game_o():
     print("Welcome to Tic Tac Toe!")
     print_board()
     player = 'X'
