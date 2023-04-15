@@ -19,11 +19,7 @@ def open_data():
 
 open_data()
 
-ref = db.reference('game/')
-users_ref = ref.child('test1')
-users_ref.update({
-    'Start': "bruh",
-})
+
 
 # round='game/test'
 # ready = db.reference(round)
@@ -71,18 +67,22 @@ def play_game_x(ch):
         position = int(input("Enter a position (1-9) to place {}: " + player))
         if board[position-1] == ' ':
             board[position-1] = player
-            print_board(board)
+            
             ref = db.reference('game/')
             users_ref = ref.child(ch)
             #houni bech updati map bi map ili badltha x
+            print_board(board)
 
             users_ref.update({
                 'Map': board,
             })
+
             #houni ni9ol rahou round 2 ma3neha round mit3 o taw
             users_ref.update({
                 'round': "2",
             })
+
+
             if check_winner(board, player):
                 print("{} wins! Congratulations!".format(player))
                 break
@@ -91,6 +91,7 @@ def play_game_x(ch):
                 print("It's a tie!")
                 break
             print("waiting for o to play")
+
             #houni bech no93d nistna lin yiji dawri
             while True:
                 #hetha lin li round 
@@ -105,6 +106,7 @@ def play_game_x(ch):
                     ready = db.reference(round)
                     #w ni7otha houni fi variable board
                     board=ready.get()
+                    print_board(board)
                     # w lina yarja3 il fou9
                     break
         else:
@@ -127,6 +129,7 @@ def play_game_o(ch):
                     round='game/'+ch+'/Map'
                     ready = db.reference(round)
                     board=ready.get()
+                    print_board(board)
                     break
         position = int(
             input("Enter a position (1-9) to place {}: ".format(player)))
