@@ -86,6 +86,9 @@ def play_game_x(ch):
             if check_winner(board, player):
                 print("{} wins! Congratulations!".format(player))
                 break
+            if check_winner(board, 'O'):
+                print("You Lost !")
+                break
 
             if ' ' not in board:
                 print("It's a tie!")
@@ -146,6 +149,9 @@ def play_game_o(ch):
             })
             if check_winner(board, player):
                 print("{} wins! Congratulations!".format(player))
+                break
+            if check_winner(board, 'X'):
+                print("You Lost !")
                 break
 
             if ' ' not in board:
