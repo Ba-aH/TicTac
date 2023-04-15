@@ -134,6 +134,9 @@ def play_game_o(ch):
                     board=ready.get()
                     print_board(board)
                     break
+        if check_winner(board, 'X'):
+                print("You Lost !")
+                break                   
         position = int(
             input("Enter a position (1-9) to place {}: ".format(player)))
         if board[position-1] == ' ':
@@ -149,6 +152,7 @@ def play_game_o(ch):
             })
             if check_winner(board, player):
                 print("{} wins! Congratulations!".format(player))
+                input("Press enter to return to main menu")
                 break
             if check_winner(board, 'X'):
                 print("You Lost !")
@@ -164,66 +168,16 @@ def play_game_o(ch):
 
 #hethi mezlt ma kemletch w ma 3aytlithch 
 #fiha fazet join roomm
-def waitingRoom(ch):
-    ref = db.reference('game/')
-    #ch houwa ena ili 3amlet room 
-    
-    users_ref = ref.child(ch)
-    # isna3et party ili fih player = ena w playerO = fi 7ata chey a5tr mezl ma jech
-    users_ref.update({
-                "party":
-                {
-                    'playerX': ch,
-                    'playerO': "",
-                }
-            })
-    #lina 3amlet while true bech no93od nistana lin ichkoun yiji 
-    while True :
-        #hetha zina 
-        os.system("cls" if os.name == "nt" else "clear")
-        
-        
-        print("+----------------------------------+")
-        print(        ch)
-        print("+----------------------------------+")
-        #hetha line li player ili bech yijoini
-        round='game/'+ch+'/join'
-        #jbet donneé
-        ready = db.reference(round)
-        #houni ken ready.get() == none rahou mezl ma jé 7ad si non rahou fama ichkoun jé 
-        if ready.get()!=None:
-            #7ata donneé fi varabile ch1 bech najem nista3mlha ba3d 
-            ch1=ready.get()
-            #zina
-            print("+----------------------------------+")
-            print(        ch)
-            print(        ch1)
-            print("+----------------------------------+")
-        
-            users_ref = ref.child(ch)
-            #houni 3amlet upadate li player 0 a5tr fama ichkoun jé mawjoud fi ch1 
-
-            users_ref.update({
-                "party":#party hiya collection 
-                {
-                    'playerX': ch,
-                    'playerO': ch1,
-                }
-            })
-            
-            input("press enter to start")
-            #------------------------------------------------
-            break
-    play_game_x(ch) 
 
 #lezm nizd fazet yida5el ismo o        
 def MultiPlayer():
 
     while True:
         with keyboard.Events() as events:
-            event = events.get(1e6)
+            
             os.system("cls" if os.name == "nt" else "clear")
             print("+----------------------------------+")
+            print("|                                  |")
             print("|                                  |")
             print("|           h : Host               |")
             print("|                                  |")
@@ -231,12 +185,15 @@ def MultiPlayer():
             print("|                                  |")
             print("|                                  |")
             print("+----------------------------------+")
-            ch = input("Your name ")
+            event = events.get(1e6)
+           
             if event.key == keyboard.KeyCode.from_char("h"):
-                print(" rak host")
+                print(" rak host") 
+                ch = input("Your name ")
                 play_game_x(ch)
             if event.key == keyboard.KeyCode.from_char("j"):
                 print("rak join")
+                ch = input("Your name ")
                 play_game_o(ch)
 
 
